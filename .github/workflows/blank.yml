@@ -1,0 +1,31 @@
+name: Download and Edit File
+
+on:
+  schedule:
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  download_and_edit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download file
+      run: |
+        curl -LJO https://git.io/chinaip
+        mv chinaip chinaip_original
+
+    - name: Edit file
+      run: |
+        sed 's/SOCKS5 127.0.0.1:1080/SOCKS5 192.168.2.254:1080/' chinaip_original > chinaip
+
+    - name: Commit and push changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add chinaip
+        git commit -m "Update chinaip file"
+        git push
