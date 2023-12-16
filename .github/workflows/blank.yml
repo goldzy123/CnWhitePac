@@ -28,5 +28,5 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git add chinaip
-        git commit -m "Update chinaip file"
-        git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
+        git push
+
